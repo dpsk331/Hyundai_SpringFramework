@@ -15,4 +15,4 @@ public class Ch01Controller {
 		logger.info("실행");
 		return "ch01/content"; // 뷰의 파일명
 	}	
-}
+} 
