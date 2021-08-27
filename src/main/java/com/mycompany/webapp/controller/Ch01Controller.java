@@ -1,4 +1,4 @@
-package com.mycompany.webapp;
+package com.mycompany.webapp.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +13,6 @@ public class Ch01Controller {
 	@RequestMapping("/content") // http://localhost:8080 가 앞에 생략 이후 + "/ch01/home"로 검색
 	public String home() {
 		logger.info("실행");
-		return "ch01/content"; // 뷰의 파일명
-	}	
+		return "ch01/content"; // 뷰(JSP)의 파일명
+	}
 } 
