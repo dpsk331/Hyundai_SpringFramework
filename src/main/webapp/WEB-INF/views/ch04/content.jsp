@@ -178,22 +178,21 @@
 						<input type="date" id="param5" name="param5" class="form-control" value="">
 						<span class="param5-error text-danger"></span>
 					</div>
-
 				</form>
-				<div class="mt-2">
+ 				<div class="mt-2">
 					<button class="btn btn-info btn-sm" onclick="requestPost()">POST 방식 요청</button>
 				</div>
 			</div>
 			
 			<script>
 				function requestPost() {
+					let checkResult = true; // 유효성 검사 결과 변수
+					
 					const param1 = $("#param1").val(); // 주민번호: xxxxxx-(1,2,3,4)xxxxxx
 					const param2 = $("#param2").val(); // 년월일: 19970331
 					const param3 = $("#param3").val(); // 패스워드: 알파벳시작 최소8자 최대10자
 					const param4 = $("#form1 input[name=param4]:checked").val();
 					const param5 = $("#param5").val();
-					
-					let checkData = true;
 					
 					const param1Error = $("#form1 .param1-error"); // jQuery 객체
 					param1Error.html("");
@@ -215,7 +214,7 @@
 						param2Error.html("필수 입력 사항");
 						checkData = false;
 					} else {
-						const pattern = /^(19|20)\d{2}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[0-1])$/;
+						const pattern = /^(19|20)\d{2}[-]*(0[1-9]|1[012])[-]*(0[1-9]|[12][0-9]|3[0-1])$/;
 						const result = pattern.test(param2)
 						if(result == false) {
 							param2Error.html("년월일 형식이 아님");
@@ -232,12 +231,14 @@
 					} else {
 						const pattern = /^[a-z]/i;
 						const result = pattern.test(param3)
-						if(result == false || (param3.length < 8 || param3.length > 15) {
-							
+						if(result == false) {
 							param3Error.html("패스워드 형식이 아님");
 							checkData = false;
-						}	
-					}					
+						} else if(param3.length < 8 || param3.length > 15) {
+							param3Error.html("패스워드 형식이 아님");
+							checkData = false;
+						}
+					}		 		
 					
 					if(checkData) {
 						$.ajax({
@@ -262,38 +263,67 @@
 				서버측 유효성 검사
 			</div>
 			<div class="card-body">
-				<form method="post" action="method2">
-                     <div class="input-group">
-                        <div class="input-group-prepend">
-                        	<span class="input-group-text">mid</span>
-                        </div>
-                        <input type="text" name="mid" class="form-control" value="${joinForm.mid}" autocapitalize="username">
-                        <!-- ▼ Spring에서 제공하는 태그, 접두사..? -->
-                        <form:errors cssClass="error" path="joinForm.mid"/>
-                     </div>
-                     <div class="input-group">
-                        <div class="input-group-prepend">
-                        	<span class="input-group-text">mpassword</span>
-                     	</div>
-                        <input type="password" name="mpassword" class="form-control" value="${joinForm.mpassword}">
-                        <form:errors cssClass="error" path="joinForm.mpassword"/>
-                     </div>
-                     <div class="input-group">
-                        <div class="input-group-prepend">
-                        	<span class="input-group-text">memail</span>
-                        </div>
-                        <input type="text" name="memail" class="form-control" value="${joinForm.memail}">
-                        <form:errors cssClass="error" path="joinForm.memail"/>
-                     </div>
-                     <div class="input-group">
-                        <div class="input-group-prepend">
-                        	<span class="input-group-text">mtel</span>
-                        </div>
-                        <input type="text" name="mtel" class="form-control" value="${joinForm.mtel}">
-                        <form:errors cssClass="error" path="joinForm.mtel"/>
-                     </div>
-                     <input class="btn btn-info" type="submit" value="가입"/>
-                  </form>
+				<div class="card m-2">
+					<div class="card-header">
+						회원 가입 폼
+					</div>
+					<div class="card-body">
+			
+						<form method="post" action="join">
+		                	<div class="input-group">
+		                    	<div class="input-group-prepend">
+		                        	<span class="input-group-text">mid</span>
+		                        </div>
+		                        <input type="text" name="mid" class="form-control" value="${joinForm.mid}" autocapitalize="username">
+		                        <!-- ▼ Spring에서 제공하는 태그, 접두사..? -->
+		                        <form:errors cssClass="text-danger" path="joinForm.mid"/>
+		                	</div>
+		                    <div class="input-group">
+		                        <div class="input-group-prepend">
+		                        	<span class="input-group-text">mpassword</span>
+		                     	</div>
+		                        <input type="password" name="mpassword" class="form-control" value="${joinForm.mpassword}">
+		                        <form:errors cssClass="text-danger" path="joinForm.mpassword"/>
+		                    </div>
+		                    <div class="input-group">
+		                        <div class="input-group-prepend">
+		                        	<span class="input-group-text">memail</span>
+		                        </div>
+		                        <input type="text" name="memail" class="form-control" value="${joinForm.memail}">
+		                        <form:errors cssClass="text-danger" path="joinForm.memail"/>
+		                    </div>
+		                    <div class="input-group">
+		                        <div class="input-group-prepend">
+		                        	<span class="input-group-text">mtel</span>
+		                        </div>
+		                        <input type="text" name="mtel" class="form-control" value="${joinForm.mtel}">
+		                        <form:errors cssClass="danger" path="joinForm.mtel"/>
+		                    </div>
+		                	<input class="btn btn-info" type="submit" value="가입"/>
+		            	</form>
+                	</div>
+				</div>
+
+				<div class="card m-2">
+					<div class="card-header">
+						로그인 폼
+					</div>
+					<div class="card-body">
+						<form method="post" action="login">
+                     		<div class="input-group">
+                       			<div class="input-group-prepend"><span class="input-group-text">mid</span></div>
+                        		<input type="text" name="mid" class="form-control" value="${loginForm.mid}">
+                        		<form:errors cssClass="error" path="loginForm.mid"/>
+                     		</div>
+                     		<div class="input-group">
+                        		<div class="input-group-prepend"><span class="input-group-text">mpassword</span></div>
+                        		<input type="password" name="mpassword" class="form-control" value="${loginForm.mpassword}">
+                        		<form:errors cssClass="error" path="loginForm.mpassword"/>
+                     		</div>
+                     		<input class="btn btn-info" type="submit" value="로그인"/>
+                  		</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
