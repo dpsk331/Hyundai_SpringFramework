@@ -19,6 +19,12 @@
       	<a class="text-white" href="${pageContext.request.contextPath}/ch03/content">Controller/Request Parameter</a>
       </h6>
    </li>
+   <li class="nav-item mb-2">
+      <h6 class="text-white">
+      	<span class="mr-2">Ch04.</span>
+      	<a class="text-white" href="${pageContext.request.contextPath}/ch04/content">Controller/Validation</a>
+      </h6>
+   </li>
 </ul>
 
 

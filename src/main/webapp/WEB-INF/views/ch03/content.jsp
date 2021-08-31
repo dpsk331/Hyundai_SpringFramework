@@ -194,7 +194,7 @@
 					console.log("param5:", param5);
 					
 					$.ajax({
-						url:"method1",
+						url:"method2",
 						method:"get",
 						data: {param1, 
 							   param2, 
