@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 스프링 설정 파일을 이용해 디스패쳐서블릿이 웹 애플리케이션 컨텍스트를 만들 때 해당 객체가 자동으로 만들어지게 설정하는 것 -->
+	<!-- 해당 객체를 만드는 태그 -->
+	<!-- 파일 업로드를 위한 MultipartResolver 객체 등록 -->
+	<bean id="multipartResolver"
+		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	
+</beans>
