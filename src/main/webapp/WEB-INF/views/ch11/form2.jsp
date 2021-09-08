@@ -52,9 +52,8 @@
 		<form:form method="post" action="form2" modelAttribute="member">
 		  <div class="form-group">
 		    <label for="mtype">Type</label>
-		    <form:select path="mtype" items="${typeList}" class="form-control"></form:select>
+		    <form:select path="mtype" items="${typeList}" class="form-control"/>
 		  </div>
-  		  <button type="submit" class="btn btn-primary">제출</button>
   		  
   		  <div class="form-group">
 		    <label for="mjob">Job</label>

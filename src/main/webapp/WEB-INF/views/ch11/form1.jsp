@@ -10,11 +10,11 @@
 		<form:form method="post" modelAttribute="member">
 		  <div class="form-group">
 		    <label for="mid">Member ID</label>
-		    <form:input type="text" class="form-control" id="mid" path="mid"/>
+		    <form:input type="text" class="form-control" path="mid"/> <!-- path 태그가 id와 name을 자동 생성함 -->
 		  </div>
 		  <div class="form-group">
 		    <label for="mname">Member Name</label>
-		    <form:input type="text" class="form-control" id="mname" path="mname"/>
+		    <form:input type="text" class="form-control" id="mname" name="mname" path="mname"/>
 		  </div>
 		  <div class="form-group">
 		    <label for="mpassword">Password</label>
