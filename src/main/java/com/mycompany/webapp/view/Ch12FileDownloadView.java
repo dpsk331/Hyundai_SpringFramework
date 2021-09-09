@@ -59,9 +59,22 @@ public class Ch12FileDownloadView extends AbstractView {
 		OutputStream os = response.getOutputStream();
 		
 		//입력스트림 -> 출력스트립
-		FileCopyUtils.copy(is, os); // 조금조금씩 읽고 출력하는 형식
+//		FileCopyUtils.copy(is, os); // 조금조금씩 읽고 출력하는 형식
+		
+		//자바 18장 복습
+		byte[] data = new byte[1024];
+		int readByteNum = -1;
+		while(true) { 
+			//읽기
+			readByteNum = is.read(data);
+			if(readByteNum == -1) break;
+			//쓰기
+			os.write(data, 0, readByteNum);
+			os.flush();
+		}
+						
 		is.close();
-		os.flush();
+//		os.flush();
 		os.close();
 		
 	}
