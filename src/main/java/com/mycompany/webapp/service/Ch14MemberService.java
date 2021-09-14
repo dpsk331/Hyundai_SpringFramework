@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.Errors;
 
 import com.mycompany.webapp.dao.Ch14MemberDao;
 import com.mycompany.webapp.dto.Ch14Member;
@@ -15,9 +16,16 @@ public class Ch14MemberService {
 	
 	//열거 타입 선언
 	public enum JoinResult {
-		SUCESS,
+		SUCCESS,
 		FAIL,
 		DUPLICATED
+	}
+	
+	public enum LoginResult {
+		SUCCESS,
+		FAIL_MID,
+		FAIL_MPASSWORD,
+		FAIL
 	}
 	
 	@Resource
@@ -36,13 +44,32 @@ public class Ch14MemberService {
 			//DB에 회원정보를 저장
 			if(dbMember == null) {
 				memberDao.insert(member);
-				return JoinResult.SUCESS;
+				return JoinResult.SUCCESS;
 			} else {
 				return JoinResult.DUPLICATED;
 			}	 
 		} catch(Exception e) {
 			e.printStackTrace();
 			return JoinResult.FAIL;
+		}
+	}
+	
+	public LoginResult login(Ch14Member member) {
+		try {
+			//이미 가입된 아이디지인지 확인
+			Ch14Member dbMember = memberDao.selectByMid(member.getMid()); //SELECT * FROM member WHERE mid=?
+			
+			//확인 작업
+			if(dbMember == null) {
+				return LoginResult.FAIL_MID;
+			} else if(!dbMember.getMpassword().equals(member.getMpassword())){
+				return LoginResult.FAIL_MPASSWORD;
+			} else {
+				return LoginResult.SUCCESS;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			return LoginResult.FAIL;
 		}
 	}
 }
