@@ -3,6 +3,7 @@ package com.mycompany.webapp.exception;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -31,18 +32,26 @@ public class Ch10ExceptionHandler {
 		return "error/500_cast";
 	}
 	
+	@ExceptionHandler
+	public String handleCh10SoldOutException(Ch10SoldOutException e) { // try-catch를 하지 않고 잡을 수 있는 에러는 RuntimeException뿐!?
+		logger.info("실행");
+		e.printStackTrace();
+		return "error/soldout";
+	}
+	
+	@ExceptionHandler
+	public String handleCh16NotFoundAccountException(Ch16NotFoundAccountException e, Model model) { // 타입 변환이 잘못될 시에 발생하는 예외
+		logger.info("실행");
+		e.printStackTrace();
+		model.addAttribute("error", e.getMessage());
+		return "error/notFoundAccountException";
+	}
+	
 	// 전체적인 에러에 대한 예외 처리
 	@ExceptionHandler
 	public String handleException(Exception e) { // try-catch를 하지 않고 잡을 수 있는 에러는 RuntimeException뿐!?
 		logger.info("실행");
 		e.printStackTrace();
 		return "error/500";
-	}
-	
-	@ExceptionHandler
-	public String handleException(Ch10SoldOutException e) { // try-catch를 하지 않고 잡을 수 있는 에러는 RuntimeException뿐!?
-		logger.info("실행");
-		e.printStackTrace();
-		return "error/soldout";
 	}
 }

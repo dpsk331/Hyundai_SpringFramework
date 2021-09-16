@@ -26,18 +26,57 @@
 			</div>
 			<div class="card-body">
 				<a href="runtimeCheck" class="btn btn-info btn-sm">요청 처리 시간 측정</a>
-				<a href="javascript:boardList()" class="btn btn-info btn-sm">인증 여부 확인</a> <!-- ajax로 처리 -->
+				<a href="javascript:boardList1()" class="btn btn-info btn-sm">인증 여부 확인(HTML 응답)</a> <!-- ajax로 처리 -->
+				<a href="javascript:boardList2()" class="btn btn-info btn-sm">인증 여부 확인(JSON 응답)</a>
 				<hr/>
 				<div>${methodName} 실행시간: ${howLong}</div>
 				<hr/>
 				<div id="boardList"></div>
 			</div>
 			<script>
-				function boardList() {
+				function boardList1(){
 					$.ajax({
-						url: "boardList"
-					}).done((data) => {
-						$("#boardList").html(data);
+						url: "boardList1"
+					}).done(data=>{
+						if(data.result==="authFail"){
+							window.location.href="login";
+						}else{
+							$("#boardList").html(data);		
+						}
+					
+					});
+				}
+				
+				function boardList2() {
+					$.ajax({
+						url: "boardList2"
+					}).done((data) => { //{result:"success", boards:[ {...}, {...}, {...} ]}
+						if(data.result == "authFail") {
+							window.location.href = "login";
+						} else {
+							let html = "";
+							
+							html += '<table class="table table-sm table-bordered">';
+							html += '<tr>';
+							html += '	<th style="width:50px">번호</th>';
+							html += '	<th style="width:200px">제목</th>';
+							html += '	<th style="width:100px">글쓴이</th>';
+							html += '	<th style="width:100px">날짜</th>';
+							html += '</tr>';
+					
+							for(var board of data.boards) {
+								html += '<tr>';
+								html += '	<td>' + board.bno + '</td>';
+								html += '	<td><a href="boardDetail?bno=' + board.bno + '">' + board.btitle + '</a></td>';
+								html += '	<td>' + board.mid + '</td>';
+								html += '	<td>' + board.bdate + '</td>';
+								html += '</tr>';
+							}
+							
+							html += '</table>';
+							
+							$("#boardList").html(html);
+						}
 					});
 				}
 			</script>

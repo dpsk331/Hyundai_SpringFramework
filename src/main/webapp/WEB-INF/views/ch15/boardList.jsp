@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<c:if test="${loginCheck == true}">
+<%-- <c:if test="${loginCheck == true}"> --%>
 	<table class="table table-sm table-bordered">
 		<tr>
 		    <th style="width:50px">번호</th>
@@ -20,8 +20,8 @@
 		    </tr>
 		</c:forEach>
 	</table>
-</c:if>
+<%-- </c:if> --%>
 
-<c:if test="${loginCheck == false}">
+<%-- <c:if test="${loginCheck == false}">
 	<div>로그인이 필요합니다.</div>
-</c:if>
+</c:if> --%>
