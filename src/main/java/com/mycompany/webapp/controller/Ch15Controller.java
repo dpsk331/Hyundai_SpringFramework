@@ -126,6 +126,6 @@ public class Ch15Controller {
 		Pager pager = new Pager(5, 5, boardService.getTotalBoardNum(), 1);
 		List<Ch14Board> boards = boardService.getBoards(pager);
 		model.addAttribute("boards", boards);
-		return "ch15/boardList";
+		return "ch15/boardList"; //해당경로가 없을 경우 위에 Mapping 되어있는 경로로 찾음
 	}
 }

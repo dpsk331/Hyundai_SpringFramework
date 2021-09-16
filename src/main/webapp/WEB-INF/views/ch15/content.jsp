@@ -37,12 +37,7 @@
 					$.ajax({
 						url: "boardList"
 					}).done((data) => {
-						if(data.result == "loginNeed") {
-							//$("#boardList").html("로그인이 필요합니다."); //에러 메시지 출력
-							window.location.href = "login"; //로그인폼으로 이동
-						} else {
-							$("#boardList").html(data);
-						}
+						$("#boardList").html(data);
 					});
 				}
 			</script>
