@@ -14,6 +14,7 @@
       </c:if>
    
       <form method="post" action="${pageContext.request.contextPath}/login">
+      	 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
          <div class="form-group">
              <label for="mid">Member ID</label>
              <input type="text" class="form-control" id="mid" name="mid">

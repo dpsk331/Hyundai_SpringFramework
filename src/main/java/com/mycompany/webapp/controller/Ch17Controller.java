@@ -19,7 +19,31 @@ public class Ch17Controller {
 	
 	@RequestMapping("/loginForm")
 	public String loginForm() {
+		logger.info("실행");
 		return "ch17/loginForm";
 	}
 	
+	@RequestMapping("/adminAction")
+	public String adminAction() {
+		logger.info("실행");
+		return "redirect:/ch17/content";
+	}
+	
+	@RequestMapping("/managerAction")
+	public String managerAction() {
+		logger.info("실행");
+		return "redirect:/ch17/content";
+	}
+	
+	@RequestMapping("/userAction")
+	public String userAction() {
+		logger.info("실행");
+		return "redirect:/ch17/content";
+	}
+	
+	@RequestMapping("/error403")
+	public String error403() {
+		logger.info("실행");
+		return "ch17/error403";
+	}
 }

@@ -7,12 +7,11 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
-	
-	<!-- Enables the Spring MVC @Controller programming model -->
 	<!-- 스프링에서 제공하는 annotation을 사용하겠다는 의미 -->
 	<annotation-driven/>
 
+	<!-- IoC 관련 @Annocation 사용 설정 -->	
+	<!-- @Controller, @Service, @Repository, @Component 중 @Service, @Repository만 찾아서 객체 생성 제외 -->
 	<context:component-scan base-package="com.mycompany.webapp">
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>
 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Repository"/>

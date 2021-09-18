@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <!DOCTYPE html>
 <html>
@@ -34,14 +35,30 @@
 				</a>
 				<div>
 					<div>
-						<c:if test="${sessionMid == null}">
-							<%-- <a href="${pageContext.request.contextPath}/ch08/login" class="btn btn-success btn-sm">로그인</a> --%>
+						<%-- <c:if test="${sessionMid == null}">
+							<a href="${pageContext.request.contextPath}/ch08/login" class="btn btn-success btn-sm">로그인</a>
 							<a href="${pageContext.request.contextPath}/ch15/login" class="btn btn-success btn-sm">로그인</a>
 						</c:if>
 						<c:if test="${sessionMid != null}">
-							<%-- <a href="${pageContext.request.contextPath}/ch08/logout" class="btn btn-success btn-sm">로그아웃</a> --%>
 							<a href="${pageContext.request.contextPath}/ch08/logout" class="btn btn-success btn-sm">로그아웃</a>
-						</c:if>
+							<a href="${pageContext.request.contextPath}/ch08/logout" class="btn btn-success btn-sm">로그아웃</a>
+						</c:if> --%>
+						<!-- 익명의 사용자일 경우(인증이 안된 사용자) 로그인 폼을 보여주고 -->
+						<sec:authorize access="isAnonymous()">
+							<a href="${pageContext.request.contextPath}/ch17/loginForm" class="btn btn-success ntm-sm">로그인</a>
+						</sec:authorize>
+						
+						<!-- 인증된 사용자일 경우(로그인된 사용자) 로그아웃 폼을 보여줌 -->
+						<sec:authorize access="isAuthenticated()">
+							<!-- 사이트간 요청 위조 방지가 비활성화 되어 있을 경우 -->
+							<%-- <a href="${pageContext.request.contextPath}/logout" class="btn btn-success ntm-sm">로그아웃</a> --%>
+							
+							<!-- 사이트간 요청 위조 방지가 활성화 되어 있을 경우 -->
+							<form method="post" action="${pageCotext.request.contextPath}/logout">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+								<button class="btn btn-success btn-sm">로그아웃</button>
+							</form>
+						</sec:authorize>
 					</div>
 				</div>
 			</nav>
