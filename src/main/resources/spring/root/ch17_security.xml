@@ -18,8 +18,8 @@
 			login-processing-url="/login"
 			always-use-default-target="false"
 			default-target-url="/"
-			authentication-failure-url="/ch17/loginForm"
-			/>
+			authentication-failure-url="/ch17/loginForm"/>
+			
 		<!-- 로그아웃 -->
 		<security:logout
 			logout-url="/logout"
@@ -27,7 +27,7 @@
 		
 		<!-- 사이트간 요청 위조 방지 비활성화 -->
 		<!-- logout도 post방식으로 요청(_csrf의 토큰을 전달해야 함)-->
-		<security:csrf disabled="false"/>
+		<security:csrf disabled="true"/>
 		
 		<!-- 요청 url 권한 설정 -->
 		<security:intercept-url pattern="/ch17/admin*" access="hasRole('ROLE_ADMIN')"/>
@@ -37,6 +37,27 @@
 		
 		<!-- 권한 없음일 경우 보여줄 페이지 설정 -->
 		<security:access-denied-handler error-page="/ch17/error403"/>		
+		
+		<!-- 로그인 중복 방지를 위한 설정 -->
+		<security:session-management>
+			<!-- 
+			max-sessions: 최대 로그인 수 
+			error-if-maximum-exceeded="true": 다른 곳에서 로그인을 할 수 없음
+			expired-url: 인증이 무료화된 사용자가 이동하는 페이지
+			-->
+			
+			<!-- 이전 로그인을 유효하게 만들기 -->
+			<!-- 
+			<security:concurrency-control max-sessions="1"
+										  error-if-maximum-exceeded="true"/>
+			 -->
+			 
+			<!-- 최종 로그인을 유효하게 만들기 -->
+			<security:concurrency-control max-sessions="1"
+										  error-if-maximum-exceeded="false"
+										  expired-url="/ch17/loginForm"/>
+		</security:session-management>
+		
 	</security:http>
 	
 	<!-- 권한 계층 설정 -->
@@ -61,8 +82,8 @@
 	
 	<bean id="daoAuthenticationProvider"
 		  class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
-		  <property name="userDetailsService" ref="jdbcUserService"></property>
-		  <property name="authoritiesMapper" ref="roleHierarchyAuthoritiesMapper"></property>
+		  <property name="userDetailsService" ref="jdbcUserService"/>
+		  <property name="authoritiesMapper" ref="roleHierarchyAuthoritiesMapper"/>
 	</bean>
 	
 	<security:jdbc-user-service id="jdbcUserService"

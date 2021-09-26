@@ -23,12 +23,30 @@
 					<%-- <a href="${pageContext.request.contextPath}/logout" class="btn btn-info ntm-sm">로그아웃</a> --%>
 					
 					<!-- 사이트간 요청 위조 방지가 활성화 되어 있을 경우 -->
-					<form method="post" action="${pageCotext.request.contextPath}/logout">
+					<form method="post" action="${pageCotext.request.contextPath}/logout" class="d-inline-block">
 						<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 						<button class="btn btn-info btn-sm">로그아웃</button>
 					</form>
+					
+					<a href="javascript:userInfo()" class="btn btn-info btn-sm ml-2">사용자 정보</a>
+					<hr/>
+					<div id="userInfo"></div>
 				</sec:authorize>
 			</div>
+			<script>
+				function userInfo(){
+					$.ajax({
+						url: "userInfo"
+					}).done((data) => {
+						//{mid:xxx, mrole:xxx, ip:xxx}
+						let html = "";
+						html += "<p>Member ID: " + data.mid + "</p>";
+						html += "<p>Member Role: " + data.mrole.toString() + "</p>";
+						html += "<p>Member IP: " + data.ip + "</p>";
+						$("#userInfo").html(html);
+					});
+				}
+			</script>
 		</div>
 		
 		<div class="card">
@@ -53,6 +71,16 @@
 				</ul>
 			</div>
 		</div>
+		
+		<div class="card">
+			<div class="card-header">
+				회원 가입(비밀번호 암호화)
+			</div>
+			<div class="card-body">
+				<a href="joinForm" class="btn btn-info btn-sm">회원 가입</a>
+			</div>
+		</div>
+		
 	</div>
 </div>
 

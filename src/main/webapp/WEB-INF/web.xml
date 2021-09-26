@@ -4,21 +4,23 @@
 		 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" 
 		 version="4.0">
  
-   <!-- 모든 서블릿과 필터를 공유하는 루트 스프링 컨테이너 정의-->
+   <!-- contextConfigLocation가 사용하는 스프링 설정 파일 위치, 모든 서블릿과 필터를 공유하는 루트 스프링 컨테이너 정의-->
    <context-param>
       <param-name>contextConfigLocation</param-name>
       <param-value>classpath:spring/root/*.xml</param-value>
    </context-param>
    
-   <!-- 모든 서블릿과 필터가 공유하는 스프링 컨테이너 생성 -->
+   <!-- Root WebApplicationContext를 생성하도록 설정, 모든 서블릿과 필터가 공유하는 스프링 컨테이너 생성 -->
    <listener>
       <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
    </listener>
 
-   <!-- 애플리케이션 요청 처리 -->
+   <!-- 애플리케이션 요청 처리를 담당하는 Servlet 등록 -->
    <servlet>
       <servlet-name>appServlet</servlet-name>
       <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+      <!-- DispatcherServlet가 사용하는 스프링 설정 파일 위치 -->
+      <!-- 이 설정 파일을 이용해서 WebApplicationContext 생성 -->
       <init-param>
          <param-name>contextConfigLocation</param-name>
          <param-value>classpath:spring/dispatcher/*.xml</param-value>
@@ -63,4 +65,8 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
   
+  	<!-- Spring Security 로그인 중복 방지를 위해 설정 -->
+  	<listener>
+  		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+  	</listener>
 </web-app>

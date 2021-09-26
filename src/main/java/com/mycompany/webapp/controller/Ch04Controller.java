@@ -28,7 +28,7 @@ public class Ch04Controller {
 		return "ch04/content";
 	}
 	
-	@PostMapping("/method1")
+	@PostMapping("/method")
 	public String method1() {
 		return "redirect:/ch04/content";
 	}
