@@ -156,7 +156,7 @@ public class Ch14Controller {
 		return "redirect:/ch14/content";
 	}
 	
-	//Mybatis 사용
+	//Mybatis 사용--------------------------------------------------------------------------------------------------
 	@Resource
 	private Ch14MemberService memberService;
 	
